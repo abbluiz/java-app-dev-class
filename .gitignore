@@ -1,6 +1,8 @@
 .idea/*
 out/*
 java-application-dev-class.iml
+src/lab11/count.txt
+src/lab11/source.txt
 src/week01/*
 src/week02/*
 src/week03/*
@@ -12,3 +14,8 @@ src/week08/*
 src/week09/*
 src/week10/*
 src/week11/*
+src/week12/*
+src/week13/*
+src/week14/*
+src/week15/*
+src/week16/*

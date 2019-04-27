@@ -3,11 +3,18 @@ package assignment3;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class A3Q1 extends Application {
 	@Override
@@ -388,6 +395,52 @@ public class A3Q1 extends Application {
 				centerPos - ((radius - numSpacingBottom) * Math.sin(Math.toRadians(90))),
 				"12");
 
+		Line center = new Line(
+				centerPos,
+				centerPos,
+				centerPos,
+				centerPos);
+
+		Calendar calendar = Calendar.getInstance();
+		int nowHours = calendar.get(Calendar.HOUR_OF_DAY);
+		int nowMinutes = calendar.get(Calendar.MINUTE);
+		int nowSeconds = calendar.get(Calendar.SECOND);
+
+		if (nowHours > 12)
+			nowHours -= 12;
+
+		System.out.println(nowHours + ":" + nowMinutes + ":" + nowSeconds);
+
+		Line seconds = new Line(
+				centerPos,
+				centerPos,
+				centerPos - ((radius - 60) * Math.cos(Math.toRadians(90 + nowSeconds*6))),
+				centerPos - ((radius - 60) * Math.sin(Math.toRadians(90 + nowSeconds*6))));
+		seconds.setStroke(Color.RED);
+
+		Line minutes = new Line(
+				centerPos,
+				centerPos,
+				centerPos - ((radius - 80) * Math.cos(Math.toRadians(90 + (nowMinutes*6) + 0.1*nowSeconds))),
+				centerPos - ((radius - 80) * Math.sin(Math.toRadians(90 + (nowMinutes*6) + 0.1*nowSeconds))));
+		minutes.setStroke(Color.BLUE);
+
+		Line hours = new Line(
+				centerPos,
+				centerPos,
+				centerPos - ((radius - 100) * Math.cos(Math.toRadians(90 + (nowHours*30) + 0.5*nowMinutes + 0.008*nowSeconds))),
+				centerPos - ((radius - 100) * Math.sin(Math.toRadians(90 + (nowHours*30) + 0.5*nowMinutes + 0.008*nowSeconds))));
+		hours.setStroke(Color.GREEN);
+
+		Text time = new Text(centerPos, 450, nowHours + ":" + nowMinutes + ":" + nowSeconds);
+		time.setTextAlignment(TextAlignment.CENTER);
+
+		StackPane timeRoot = new StackPane();
+		timeRoot.getChildren().addAll(time);
+
+		timeRoot.setLayoutX(250.0 - 30.0);
+		timeRoot.setLayoutY(480.0);
+
 		Pane pane = new Pane();
 		pane.getChildren().addAll(
 				outerCircle,
@@ -402,7 +455,8 @@ public class A3Q1 extends Application {
 				$8_12, $8_24, $8_36, $8_48, $9, $9_num,
 				$9_12, $9_24, $9_36, $9_48, $10, $10_num,
 				$10_12, $10_24, $10_36, $10_48, $11, $11_num,
-				$11_12, $11_24, $11_36, $11_48, $12, $12_num);
+				$11_12, $11_24, $11_36, $11_48, $12, $12_num,
+				center, seconds, minutes, hours, timeRoot);
 
 		Scene scene = new Scene(pane, 500, 500);
 
